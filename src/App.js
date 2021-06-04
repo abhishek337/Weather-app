@@ -12,7 +12,7 @@ useEffect(() => {
   
     const res = await fetch(api);  
     const data = await res.json();
-    setCity(data)
+    setCity(data.main)
   }
 
   useapi();
@@ -38,12 +38,12 @@ useEffect(() => {
       {search}
       </h2>
       <h1 className="temp">
-        {city.main.temp}&deg;C
+        {city.temp}&deg;C
       </h1>
       <h3 className="tempmin_max">
-      Min :{city.main.temp_min}&deg;C | Max :{city.main.temp_max}&deg;C
+      Min :{city.temp_min}&deg;C | Max :{city.temp_max}&deg;C
       </h3>
-      <h3 className="tempmin_max">Humidity : {city.main.humidity}</h3>
+      <h3 className="tempmin_max">Humidity : {city.humidity}</h3>
      </div>
 
      <div className="wave -one"></div>
