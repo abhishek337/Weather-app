@@ -1,25 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
 
-function App() {
+const App = () => {
+
+const[city,setCity] = useState(null);
+const[search,setSearch] = useState("kalyan");
+
+useEffect(() => {
+ 
+ const useapi = async ()=>{
+    const api = `http://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=b267eeed2b1f591ff0d6e7f00926bc0d`
+  
+    const res = await fetch(api);  
+    const data = await res.json();
+    setCity(data)
+  }
+
+  useapi();
+}, [search])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div className="box">
+    <div className="inputdata">
+      <input type="search"
+      value={search}
+      className="inputfield"
+      onChange={(event) => { setSearch(event.target.value)}}
+      />
     </div>
-  );
+    {!city ?(
+      <p className="error-msg">Data not found</p>
+    ):(
+    <div>
+     <div className="info">
+      <h2 className="location">
+      <i className="fas fa-street-view" ></i>
+      {search}
+      </h2>
+      <h1 className="temp">
+        {city.main.temp}&deg;C
+      </h1>
+      <h3 className="tempmin_max">
+      Min :{city.main.temp_min}&deg;C | Max :{city.main.temp_max}&deg;C
+      </h3>
+      <h3 className="tempmin_max">Humidity : {city.main.humidity}</h3>
+     </div>
+
+     <div className="wave -one"></div>
+     <div className="wave -two"></div>
+     <div className="wave -three"></div>
+     </div>
+     )}
+    </div>
+    </>
+  )
 }
 
-export default App;
+export default App
